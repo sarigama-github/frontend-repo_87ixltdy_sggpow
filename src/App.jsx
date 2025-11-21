@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import Slide from './components/Slide'
 
 const slides = [
@@ -137,14 +138,39 @@ function App() {
 
   const progress = useMemo(() => ((current + 1) / total) * 100, [current, total])
 
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'ArrowRight') go(1)
+      if (e.key === 'ArrowLeft') go(-1)
+      if (e.key.toLowerCase() === 'h') jump(0)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
+  const transition = { type: 'spring', damping: 24, stiffness: 260 }
+
   return (
     <div className="min-h-screen bg-slate-950 text-blue-50 relative overflow-hidden">
-      {/* Background accents */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-blue-500/10 blur-3xl" />
-        <div className="absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-cyan-400/10 blur-3xl" />
+      {/* Animated gradient background */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        <motion.div
+          className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-gradient-to-br from-fuchsia-500/20 to-pink-400/20 blur-3xl"
+          animate={{ x: [0, 20, -10, 0], y: [0, -10, 10, 0] }}
+          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-gradient-to-br from-emerald-500/20 to-teal-400/20 blur-3xl"
+          animate={{ x: [0, -10, 20, 0], y: [0, 15, -10, 0] }}
+          transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
+        />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.06),transparent_60%)]" />
-      </div>
+      </motion.div>
 
       {/* Top bar */}
       <div className="relative z-10 flex items-center justify-between px-4 md:px-8 py-4 border-b border-white/5 bg-slate-900/40 backdrop-blur">
@@ -160,31 +186,48 @@ function App() {
 
       {/* Slide container */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-8 py-8 md:py-12 min-h-[calc(100vh-120px)]">
-        <div className="bg-slate-900/50 border border-white/10 rounded-2xl p-6 md:p-10 shadow-2xl shadow-blue-900/20 min-h-[60vh] flex">
-          <Slide
-            {...slides[current]}
-            index={current}
-            total={total}
-          />
+        <div className="bg-slate-900/50 border border-white/10 rounded-2xl p-6 md:p-10 shadow-2xl shadow-blue-900/20 min-h-[60vh] flex overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current}
+              initial={{ opacity: 0, x: 30, scale: 0.98 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: -30, scale: 0.98 }}
+              transition={transition}
+              className="flex-1"
+            >
+              <Slide
+                {...slides[current]}
+                index={current}
+                total={total}
+              />
+            </motion.div>
+          </AnimatePresence>
         </div>
 
         {/* Controls */}
         <div className="mt-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <button onClick={() => go(-1)} className="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10">Prev</button>
-            <button onClick={() => go(1)} className="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10">Next</button>
+            <motion.button whileTap={{ scale: 0.96 }} onClick={() => go(-1)} className="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10">Prev</motion.button>
+            <motion.button whileTap={{ scale: 0.96 }} onClick={() => go(1)} className="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10">Next</motion.button>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-sm text-blue-300/80">{current + 1} / {total}</span>
             <div className="w-48 md:w-72 h-2 bg-white/10 rounded-full overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-blue-500 to-cyan-400" style={{ width: `${progress}%` }} />
+              <motion.div
+                className="h-full bg-gradient-to-r from-blue-500 via-fuchsia-500 to-cyan-400"
+                style={{ width: `${progress}%` }}
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={transition}
+              />
             </div>
           </div>
         </div>
 
         {/* Keyboard hints */}
         <div className="mt-4 text-center text-xs text-blue-300/60">
-          Tip: Use the Next and Prev buttons or tap the Home button to jump back.
+          Tip: Arrow keys to navigate • H to return Home
         </div>
       </div>
     </div>
