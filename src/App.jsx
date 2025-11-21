@@ -1,69 +1,190 @@
+import React, { useMemo, useState } from 'react'
+import Slide from './components/Slide'
+
+const slides = [
+  {
+    kicker: 'AIOne',
+    title: 'The Universal AI Hub',
+    subtitle: 'All AI tools in one place, neatly organized, instantly usable',
+    footer: 'aio.one • @AIOne',
+  },
+  {
+    title: 'The Problem',
+    points: [
+      'AI tools are fragmented across websites, apps, models, and APIs',
+      'Hard to find the right tool for the task',
+      'Inconsistent UX, pricing, and trust signals',
+      'Context switching and learning curves slow adoption',
+    ],
+  },
+  {
+    title: 'Our Solution',
+    subtitle: 'One app to discover, compare, and use the best AI for any job',
+    points: [
+      'Aggregates trusted AI tools and models',
+      'Auto-sorted by categories, tasks, and user intent',
+      'Unified search with fast best-match suggestions',
+      'Consistent UX and billing across providers',
+    ],
+  },
+  {
+    title: 'What It Does',
+    points: [
+      'Catalog: curated directory by category (writing, coding, design, research, etc.)',
+      'Meta-search: cross-search across providers with side-by-side results',
+      'One-tap launch: consistent command bar for any tool',
+      'Smart routing: picks best tool/model for your request',
+      'Unified history: prompts, outputs, and sources in one timeline',
+    ],
+  },
+  {
+    title: 'Categories & Use Cases',
+    points: [
+      'Create: copywriting, ads, social posts, pitch decks',
+      'Code: debug, refactor, tests, explain code',
+      'Design: logos, mockups, edits, illustrations, 3D',
+      'Learn: tutoring, test prep, languages',
+      'Research: review, summarization, citations',
+      'Workflows: notes, email replies, spreadsheets',
+      'Media: voice, music, video generation',
+      'Assistants: travel, shopping, finance, legal basics',
+    ],
+  },
+  {
+    title: 'How It Works',
+    points: [
+      'Discovery: vetted database with quality scores',
+      'Normalized APIs: adapters to a common interface',
+      'Orchestrator: routes by quality/cost/latency',
+      'Safety layer: redaction, policy checks, guardrails',
+      'Caching: speed and cost optimization',
+    ],
+  },
+  {
+    title: 'UX Highlights',
+    points: [
+      'One search bar + categories + quick actions',
+      'Intent chips: Summarize, Translate, Generate Image, Debug, etc.',
+      'Compare view: results from 2–3 tools side by side',
+      'Spaces: shareable project collections',
+      'Keyboard-first: global shortcuts; accessible design',
+    ],
+  },
+  {
+    title: 'Trust, Safety, and Privacy',
+    points: [
+      'Local redaction before requests leave device',
+      'Clear provenance: which tool, when, model version',
+      'Opt-in data sharing; zero-knowledge vault',
+      'Ratings and benchmarks for transparency',
+      'Compliance options for education and enterprise',
+    ],
+  },
+  {
+    title: 'Differentiation',
+    points: [
+      'Not another model—an operating layer over many',
+      'Neutral, quality-first routing (no lock-in)',
+      'Consistent UX and billing across tools',
+      'Real-time benchmarks and explainable selection',
+    ],
+  },
+  {
+    title: 'Business Model',
+    points: [
+      'Freemium with limited runs and providers',
+      'Plus ($7.99/mo): unlimited categories, compare, Spaces',
+      'Pro ($19.99/mo): teams, compliance, custom routing, SSO',
+      'Rev-share marketplace with premium providers',
+      'Partner API for browsers and productivity suites',
+    ],
+  },
+  {
+    title: 'Go-to-Market',
+    points: [
+      'Focus: students and knowledge workers',
+      'Browser extension + web app for fast adoption',
+      'Influencer tutorials: “Compare 3 AIs at once”',
+      'Partnerships: LMS, note-taking, cloud drives',
+      'Community curation: leaderboards and templates',
+    ],
+  },
+  {
+    title: 'Roadmap & Call to Action',
+    points: [
+      'Q1: catalog, unified search, compare view, redaction',
+      'Q2: smart routing v1, templates, extension, mobile beta',
+      'Q3: team workspaces, enterprise controls, marketplace',
+      'Join waitlist, become a curator, or apply as a provider',
+    ],
+  },
+]
+
 function App() {
+  const [current, setCurrent] = useState(0)
+  const total = slides.length
+
+  const go = (dir) => {
+    setCurrent((c) => {
+      const n = c + dir
+      if (n < 0) return 0
+      if (n >= total) return total - 1
+      return n
+    })
+  }
+
+  const jump = (n) => setCurrent(Math.max(0, Math.min(total - 1, n)))
+
+  const progress = useMemo(() => ((current + 1) / total) * 100, [current, total])
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* Subtle pattern overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.05),transparent_50%)]"></div>
+    <div className="min-h-screen bg-slate-950 text-blue-50 relative overflow-hidden">
+      {/* Background accents */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-blue-500/10 blur-3xl" />
+        <div className="absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-cyan-400/10 blur-3xl" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.06),transparent_60%)]" />
+      </div>
 
-      <div className="relative min-h-screen flex items-center justify-center p-8">
-        <div className="max-w-2xl w-full">
-          {/* Header with Flames icon */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center mb-6">
-              <img
-                src="/flame-icon.svg"
-                alt="Flames"
-                className="w-24 h-24 drop-shadow-[0_0_25px_rgba(59,130,246,0.5)]"
-              />
-            </div>
+      {/* Top bar */}
+      <div className="relative z-10 flex items-center justify-between px-4 md:px-8 py-4 border-b border-white/5 bg-slate-900/40 backdrop-blur">
+        <div className="flex items-center gap-3">
+          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-400 shadow-lg shadow-blue-500/20" />
+          <span className="text-sm md:text-base text-blue-200/90">AIOne Presentation</span>
+        </div>
+        <div className="flex items-center gap-2 text-xs md:text-sm">
+          <button onClick={() => jump(0)} className="px-3 py-1 rounded bg-white/5 hover:bg-white/10">Home</button>
+          <a href="/test" className="px-3 py-1 rounded bg-white/5 hover:bg-white/10">System Test</a>
+        </div>
+      </div>
 
-            <h1 className="text-5xl font-bold text-white mb-4 tracking-tight">
-              Flames Blue
-            </h1>
+      {/* Slide container */}
+      <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-8 py-8 md:py-12 min-h-[calc(100vh-120px)]">
+        <div className="bg-slate-900/50 border border-white/10 rounded-2xl p-6 md:p-10 shadow-2xl shadow-blue-900/20 min-h-[60vh] flex">
+          <Slide
+            {...slides[current]}
+            index={current}
+            total={total}
+          />
+        </div>
 
-            <p className="text-xl text-blue-200 mb-6">
-              Build applications through conversation
-            </p>
+        {/* Controls */}
+        <div className="mt-6 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <button onClick={() => go(-1)} className="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10">Prev</button>
+            <button onClick={() => go(1)} className="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10">Next</button>
           </div>
-
-          {/* Instructions */}
-          <div className="bg-slate-800/50 backdrop-blur-sm border border-blue-500/20 rounded-2xl p-8 shadow-xl mb-6">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                1
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Describe your idea</h3>
-                <p className="text-blue-200/80 text-sm">Use the chat panel on the left to tell the AI what you want to build</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4 mb-6">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                2
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Watch it build</h3>
-                <p className="text-blue-200/80 text-sm">Your app will appear in this preview as the AI generates the code</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                3
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Refine and iterate</h3>
-                <p className="text-blue-200/80 text-sm">Continue the conversation to add features and make changes</p>
-              </div>
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-blue-300/80">{current + 1} / {total}</span>
+            <div className="w-48 md:w-72 h-2 bg-white/10 rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-blue-500 to-cyan-400" style={{ width: `${progress}%` }} />
             </div>
           </div>
+        </div>
 
-          {/* Footer */}
-          <div className="text-center">
-            <p className="text-sm text-blue-300/60">
-              No coding required • Just describe what you want
-            </p>
-          </div>
+        {/* Keyboard hints */}
+        <div className="mt-4 text-center text-xs text-blue-300/60">
+          Tip: Use the Next and Prev buttons or tap the Home button to jump back.
         </div>
       </div>
     </div>
