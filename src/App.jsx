@@ -8,6 +8,7 @@ const slides = [
     title: 'The Universal AI Hub',
     subtitle: 'All AI tools in one place, neatly organized, instantly usable',
     footer: 'aio.one • @AIOne',
+    imageUrl: 'https://images.unsplash.com/photo-1558981285-6f0c94958bb6?q=80&w=1600&auto=format&fit=crop'
   },
   {
     title: 'The Problem',
@@ -17,6 +18,7 @@ const slides = [
       'Inconsistent UX, pricing, and trust signals',
       'Context switching and learning curves slow adoption',
     ],
+    imageUrl: 'https://images.unsplash.com/photo-1534759846116-57968a6b2502?q=80&w=1600&auto=format&fit=crop'
   },
   {
     title: 'Our Solution',
@@ -27,6 +29,7 @@ const slides = [
       'Unified search with fast best-match suggestions',
       'Consistent UX and billing across providers',
     ],
+    imageUrl: 'https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?q=80&w=1600&auto=format&fit=crop'
   },
   {
     title: 'What It Does',
@@ -37,6 +40,7 @@ const slides = [
       'Smart routing: picks best tool/model for your request',
       'Unified history: prompts, outputs, and sources in one timeline',
     ],
+    imageUrl: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1600&auto=format&fit=crop'
   },
   {
     title: 'Categories & Use Cases',
@@ -50,6 +54,7 @@ const slides = [
       'Media: voice, music, video generation',
       'Assistants: travel, shopping, finance, legal basics',
     ],
+    imageUrl: 'https://images.unsplash.com/photo-1551281043-8adf6f7f5315?q=80&w=1600&auto=format&fit=crop'
   },
   {
     title: 'How It Works',
@@ -60,6 +65,7 @@ const slides = [
       'Safety layer: redaction, policy checks, guardrails',
       'Caching: speed and cost optimization',
     ],
+    imageUrl: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop'
   },
   {
     title: 'UX Highlights',
@@ -70,6 +76,7 @@ const slides = [
       'Spaces: shareable project collections',
       'Keyboard-first: global shortcuts; accessible design',
     ],
+    imageUrl: 'https://images.unsplash.com/photo-1526378716734-2ad948a999f8?q=80&w=1600&auto=format&fit=crop'
   },
   {
     title: 'Trust, Safety, and Privacy',
@@ -80,6 +87,7 @@ const slides = [
       'Ratings and benchmarks for transparency',
       'Compliance options for education and enterprise',
     ],
+    imageUrl: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1600&auto=format&fit=crop'
   },
   {
     title: 'Differentiation',
@@ -89,6 +97,7 @@ const slides = [
       'Consistent UX and billing across tools',
       'Real-time benchmarks and explainable selection',
     ],
+    imageUrl: 'https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1600&auto=format&fit=crop'
   },
   {
     title: 'Business Model',
@@ -99,6 +108,7 @@ const slides = [
       'Rev-share marketplace with premium providers',
       'Partner API for browsers and productivity suites',
     ],
+    imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop'
   },
   {
     title: 'Go-to-Market',
@@ -109,6 +119,7 @@ const slides = [
       'Partnerships: LMS, note-taking, cloud drives',
       'Community curation: leaderboards and templates',
     ],
+    imageUrl: 'https://images.unsplash.com/photo-1468528883336-6dfcce6330c2?q=80&w=1600&auto=format&fit=crop'
   },
   {
     title: 'Roadmap & Call to Action',
@@ -118,7 +129,20 @@ const slides = [
       'Q3: team workspaces, enterprise controls, marketplace',
       'Join waitlist, become a curator, or apply as a provider',
     ],
+    imageUrl: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1600&auto=format&fit=crop'
   },
+  // Ending slide
+  {
+    title: 'Thank You',
+    subtitle: 'Let’s build AIOne together',
+    points: [
+      'Join the waitlist at aio.one',
+      'Reach out: team@aio.one',
+      'Follow updates: @AIOne',
+    ],
+    footer: 'Press H to restart',
+    imageUrl: 'https://images.unsplash.com/photo-1470229538611-16ba8c7ffbd7?q=80&w=1600&auto=format&fit=crop'
+  }
 ]
 
 function App() {

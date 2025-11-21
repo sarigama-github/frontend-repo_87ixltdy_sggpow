@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 
-function Slide({ title, subtitle, points = [], kicker, footer, children, index = 0, total = 1 }) {
+function Slide({ title, subtitle, points = [], kicker, footer, children, index = 0, total = 1, imageUrl }) {
   const palettes = [
     { from: 'from-blue-500', to: 'to-cyan-400', soft: 'bg-blue-500/10' },
     { from: 'from-fuchsia-500', to: 'to-pink-400', soft: 'bg-fuchsia-500/10' },
@@ -26,6 +26,41 @@ function Slide({ title, subtitle, points = [], kicker, footer, children, index =
 
   return (
     <section className="w-full h-full flex flex-col justify-between relative overflow-hidden">
+      {/* Cinematic background (optional) */}
+      {imageUrl && (
+        <div className="pointer-events-none absolute inset-0">
+          <motion.div
+            className="absolute inset-0"
+            initial={{ scale: 1.05, x: 0, y: 0, opacity: 0 }}
+            animate={{ scale: 1.15, x: -10, y: -6, opacity: 0.6 }}
+            transition={{ duration: 18, ease: 'easeInOut' }}
+            style={{
+              backgroundImage: `url(${imageUrl})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              filter: 'saturate(1.1) contrast(1.05) brightness(0.9)'
+            }}
+          />
+          {/* Color wash */}
+          <div className={`absolute inset-0 bg-gradient-to-b ${theme.from} ${theme.to} opacity-20 mix-blend-screen`} />
+          {/* Vignette */}
+          <div className="absolute inset-0 pointer-events-none" style={{
+            background: 'radial-gradient(circle at center, rgba(0,0,0,0) 40%, rgba(2,6,23,0.55) 85%)'
+          }} />
+          {/* Light streak / lens flare */}
+          <motion.div
+            className="absolute -top-20 -left-32 h-72 w-[120%] rotate-12"
+            initial={{ opacity: 0.0 }}
+            animate={{ opacity: [0.05, 0.12, 0.05] }}
+            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+            style={{
+              background: 'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%)',
+              filter: 'blur(12px)'
+            }}
+          />
+        </div>
+      )}
+
       {/* decorative backdrop */}
       <div className="pointer-events-none absolute inset-0">
         <div className={`absolute -top-24 -left-24 h-56 w-56 rounded-full ${theme.soft} blur-3xl`} />
